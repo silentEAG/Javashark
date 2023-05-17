@@ -22,6 +22,8 @@ public class POJONode
     public POJONode(Object v) { _value = v; }
 
     // Simplest way is by using a helper
+
+    // 两种改法，一种直接这么覆写，一种直接删除该方法
     @Override
     Object writeReplace() {
         return new POJONode(_value);
