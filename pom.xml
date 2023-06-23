@@ -73,6 +73,11 @@
             <artifactId>kryo</artifactId>
             <version>5.3.0</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.caucho</groupId>-->
+<!--            <artifactId>hessian</artifactId>-->
+<!--            <version>4.0.62</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -107,12 +112,15 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-            <version>9.0.54</version>
-            <!--<scope>provided</scope>-->
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>2.13.11</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-reflect</artifactId>
+            <version>2.13.11</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.unboundid/unboundid-ldapsdk -->
         <dependency>
             <groupId>com.unboundid</groupId>
@@ -224,7 +232,7 @@
         <dependency>
             <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
-            <version>3.19.0-GA</version>
+            <version>3.29.1-GA</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

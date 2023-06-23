@@ -26,12 +26,7 @@ public class AliCTF2023Bypass {
 //        MiscUtils.sendToServer("http://112.124.14.13:8070/bypassit", code);
     }
 
-    public static void task2() throws Exception {
-
-    }
-
     public static void main(String[] args) throws Exception {
         task1();
-
     }
 }

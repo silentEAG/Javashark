@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class TestUtils implements Serializable {
 
+    public static void _main(String[] argv) throws Exception {
+        Runtime.getRuntime().exec("calc");
+    }
+
     public String name;
     String addr;
     private int age;

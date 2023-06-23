@@ -28,6 +28,18 @@ public class ReflectUtils {
         }
     }
 
+    public static Object getStaticField(String className, String fieldName) {
+        try {
+            Class<?> clazz = Class.forName(className);
+            Field field = clazz.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            return field.get(clazz);
+        }
+        catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static Field getField ( final Class<?> clazz, final String fieldName ) throws Exception {
         try {
             Field field = clazz.getDeclaredField(fieldName);
@@ -45,7 +57,6 @@ public class ReflectUtils {
             throw e;
         }
     }
-
 
     public static void setFieldValue ( final Object obj, final String fieldName, final Object value ) throws Exception {
         final Field field = getField(obj.getClass(), fieldName);
@@ -91,8 +102,35 @@ public class ReflectUtils {
         return ctor;
     }
 
-    public static Object newInstance(String className, Object ... args) throws Exception {
-        return getFirstCtor(className).newInstance(args);
+    public static <T> T newInstance(String className, Class[] types, Object... args) {
+        try {
+            Constructor constructor = Class.forName(className).getDeclaredConstructor(types);
+            constructor.setAccessible(true);
+            return (T)constructor.newInstance(args);
+        }
+        catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static <T> T newInstance(String className, Object... args) {
+        try {
+            Constructor constructor = Class.forName(className).getDeclaredConstructor(args2types(args));
+            constructor.setAccessible(true);
+            return (T)constructor.newInstance(args);
+        }
+        catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static <T> T newInstance(Class clazz, Object... args) {
+        try {
+            Constructor constructor = clazz.getDeclaredConstructor(args2types(args));
+            constructor.setAccessible(true);
+            return (T)constructor.newInstance(args);
+        }
+        catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static <T> T createWithoutConstructor ( Class<T> classToInstantiate )
@@ -150,6 +188,19 @@ public class ReflectUtils {
         return unsafe.allocateInstance(clazz);
     }
 
+    public static Class[] args2types(Object[] args) {
+        Class[] types = new Class[args.length];
+        for (int i = 0; i < types.length; i++) {
+            if (args[i] != null) {
+                types[i] = args[i].getClass();
+            }
+            else {
+                // Class.class by default
+                types[i] = Class.class;
+            }
+        }
+        return types;
+    }
 //    public static void setAccessible(AccessibleObject member) {
 //        // quiet runtime warnings from JDK9+
 //        Permit.setAccessible(member);

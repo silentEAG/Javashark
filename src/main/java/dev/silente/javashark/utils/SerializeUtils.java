@@ -81,10 +81,6 @@ public class SerializeUtils {
     }
 
     public static byte[] hessian2Serialize(Object o) throws Exception{
-//        ByteArrayOutputStream os = new ByteArrayOutputStream();
-//        AbstractHessianOutput out = new Hessian2Output(os);
-//        out.writeObject(o);
-//        return os.toByteArray();
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         AbstractHessianOutput out = new Hessian2Output(bos);
         out.writeObject(o);

