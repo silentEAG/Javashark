@@ -1,6 +1,6 @@
 # JavaShark
 
-自用 Java 反序列化链子集合， 主要参考于 [Eki-marshalexp](https://github.com/EkiXu/marshalexp)，主要用于解决 CTF Java 赛题。
+自用 Java 反序列化链子集合， 主要参考于 [Eki-marshalexp](https://github.com/EkiXu/marshalexp)，用于解决 CTF Java 赛题。
 
 ## 结构
 - src
