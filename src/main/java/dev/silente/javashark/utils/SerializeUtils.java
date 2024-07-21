@@ -8,6 +8,7 @@ import com.esotericsoftware.kryo.io.Output;
 import org.nibblesec.tools.SerialKiller;
 import org.objenesis.strategy.StdInstantiatorStrategy;
 import java.io.*;
+import java.util.zip.GZIPOutputStream;
 
 public class SerializeUtils {
     public static class NoWriteReplaceSerializerFactory extends SerializerFactory {
@@ -44,7 +45,7 @@ public class SerializeUtils {
 
     }
 
-    public static byte[] serialize(Object o) throws Exception{
+    public static byte[] serialize(Object o) throws Exception {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(bos);
         oos.writeObject(o);
@@ -53,21 +54,20 @@ public class SerializeUtils {
         return bos.toByteArray();
     }
 
-    public static void serialize(Object o,String outPath) throws Exception{
+    public static void serialize(Object o,String outPath) throws Exception {
         FileOutputStream fos = new FileOutputStream(outPath);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(o);
         oos.close();
         fos.close();
-        return;
     }
 
-    public static Object deserialize(byte[] bytes) throws Exception{
+    public static void deserialize(byte[] bytes) throws Exception {
         ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
         ObjectInputStream ois = new ObjectInputStream(bis);
         bis.close();
         ois.close();
-        return ois.readObject();
+        ois.readObject();
     }
 
     public static Object deserialize(String binFile,String killerLocation) throws Exception {
@@ -138,10 +138,6 @@ public class SerializeUtils {
     }
 
     public static byte[] hessianLiteSerialize(Object o) throws Exception{
-//        ByteArrayOutputStream os = new ByteArrayOutputStream();
-//        AbstractHessianOutput out = new Hessian2Output(os);
-//        out.writeObject(o);
-//        return os.toByteArray();
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         com.alibaba.com.caucho.hessian.io.AbstractHessianOutput out = new com.alibaba.com.caucho.hessian.io.Hessian2Output(bos);
         HessianLiteNoWriteReplaceSerializerFactory sf = new HessianLiteNoWriteReplaceSerializerFactory();

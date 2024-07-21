@@ -1,11 +1,18 @@
 package dev.silente.javashark.utils;
 
+import dev.silente.javashark.sink.jdk.STemplates;
+
 import java.io.Serializable;
 
 public class TestUtils implements Serializable {
 
     public static void _main(String[] argv) throws Exception {
         Runtime.getRuntime().exec("calc");
+    }
+
+    public static void main(String[] args) throws Exception {
+        Object o = STemplates.getEvilTemplates("calc");
+
     }
 
     public String name;

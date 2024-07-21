@@ -7,27 +7,10 @@
     <groupId>dev.silente</groupId>
     <artifactId>Javashark</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
 
     <dependencies>
-        <dependency>
-            <groupId>rome</groupId>
-            <artifactId>rome</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.rometools/rome-utils -->
-        <dependency>
-            <groupId>com.rometools</groupId>
-            <artifactId>rome-utils</artifactId>
-            <version>1.7.0</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.rometools/rome-utils -->
-        <dependency>
-            <groupId>com.rometools</groupId>
-            <artifactId>rome</artifactId>
-            <version>1.7.0</version>
-        </dependency>
 
         <dependency>
             <groupId>org.javassist</groupId>
@@ -35,13 +18,27 @@
             <version>3.28.0-GA</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/com.caucho/hessian -->
+        <!-- Rome -->
+        <dependency>
+            <groupId>rome</groupId>
+            <artifactId>rome</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.rometools</groupId>
+            <artifactId>rome-utils</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.rometools</groupId>
+            <artifactId>rome</artifactId>
+            <version>1.7.0</version>
+        </dependency>
         <dependency>
             <groupId>com.alipay.sofa</groupId>
             <artifactId>hessian</artifactId>
             <version>4.0.4</version>
         </dependency>
-
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
@@ -67,38 +64,27 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.7</version>
         </dependency>
-
         <dependency>
             <groupId>com.esotericsoftware</groupId>
             <artifactId>kryo</artifactId>
             <version>5.3.0</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.caucho</groupId>-->
-<!--            <artifactId>hessian</artifactId>-->
-<!--            <version>4.0.62</version>-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.25</version>
             <scope>compile</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>5.3.18</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>5.3.18</version>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
@@ -121,6 +107,7 @@
             <artifactId>scala-reflect</artifactId>
             <version>2.13.11</version>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.unboundid/unboundid-ldapsdk -->
         <dependency>
             <groupId>com.unboundid</groupId>
@@ -148,16 +135,6 @@
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.2</version>
         </dependency>
-
-
-        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/javax.el/javax.el-api &ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>javax.el</groupId>-->
-        <!--            <artifactId>javax.el-api</artifactId>-->
-        <!--            <version>3.0.0</version>-->
-        <!--        </dependency>-->
-
-
         <!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
@@ -282,7 +259,21 @@
             <artifactId>ognl</artifactId>
             <version>3.1.21</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.asynchttpclient</groupId>
+            <artifactId>async-http-client</artifactId>
+            <version>2.8.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+            <version>1.9.2</version>
+        </dependency>
     </dependencies>
+
+
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

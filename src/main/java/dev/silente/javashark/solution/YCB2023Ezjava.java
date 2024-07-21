@@ -3,15 +3,12 @@ package dev.silente.javashark.solution;
 import com.ycbjava.Bean.HtmlBean;
 import com.ycbjava.Utils.HtmlInvocationHandler;
 import com.ycbjava.Utils.HtmlMap;
-import com.ycbjava.Utils.NewObjectInputStream;
 import dev.silente.javashark.gadget.jdk.GBadAttributeValueExpException;
 import dev.silente.javashark.gadget.springboot.GPOJONode;
 import dev.silente.javashark.utils.MiscUtils;
 import dev.silente.javashark.utils.ReflectUtils;
 import dev.silente.javashark.utils.SerializeUtils;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Proxy;
 import java.util.Map;
 
@@ -44,5 +41,4 @@ public class YCB2023Ezjava {
 
 //        SerializeUtils.deserialize(poc);
     }
-
 }

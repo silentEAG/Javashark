@@ -40,14 +40,13 @@ public class ReflectUtils {
         }
     }
 
-    public static Field getField ( final Class<?> clazz, final String fieldName ) throws Exception {
+    public static Field getField(final Class<?> clazz, final String fieldName) throws Exception {
         try {
             Field field = clazz.getDeclaredField(fieldName);
             if ( field != null )
                 field.setAccessible(true);
             else if ( clazz.getSuperclass() != null )
                 field = getField(clazz.getSuperclass(), fieldName);
-
             return field;
         }
         catch ( NoSuchFieldException e ) {
@@ -58,7 +57,7 @@ public class ReflectUtils {
         }
     }
 
-    public static void setFieldValue ( final Object obj, final String fieldName, final Object value ) throws Exception {
+    public static void setFieldValue(final Object obj, final String fieldName, final Object value) throws Exception {
         final Field field = getField(obj.getClass(), fieldName);
         field.set(obj, value);
     }
@@ -66,8 +65,6 @@ public class ReflectUtils {
     public static Object getFieldValue(Object object, String fieldName) throws NoSuchFieldException, IllegalAccessException {
         Field field = null;
         Class<?> clazz = object.getClass();
-
-        //如果是接口中的field直接getField
         try{
             field = clazz.getField(fieldName);
         }catch (NoSuchFieldException e1){
@@ -75,7 +72,6 @@ public class ReflectUtils {
                 try {
                     field = clazz.getDeclaredField(fieldName);
                     break;
-                    //如果NoSuchField继续往父类找
                 } catch (NoSuchFieldException e2) {
                     clazz = clazz.getSuperclass();
                 }
@@ -102,6 +98,7 @@ public class ReflectUtils {
         return ctor;
     }
 
+    @SuppressWarnings ( {"unchecked"} )
     public static <T> T newInstance(String className, Class[] types, Object... args) {
         try {
             Constructor constructor = Class.forName(className).getDeclaredConstructor(types);
@@ -112,6 +109,8 @@ public class ReflectUtils {
             throw new RuntimeException(e);
         }
     }
+
+    @SuppressWarnings ( {"unchecked"} )
     public static <T> T newInstance(String className, Object... args) {
         try {
             Constructor constructor = Class.forName(className).getDeclaredConstructor(args2types(args));
@@ -122,6 +121,8 @@ public class ReflectUtils {
             throw new RuntimeException(e);
         }
     }
+
+    @SuppressWarnings ( {"unchecked"} )
     public static <T> T newInstance(Class clazz, Object... args) {
         try {
             Constructor constructor = clazz.getDeclaredConstructor(args2types(args));
@@ -133,17 +134,16 @@ public class ReflectUtils {
         }
     }
 
-    public static <T> T createWithoutConstructor ( Class<T> classToInstantiate )
+    public static <T> T createWithoutConstructor(Class<T> classToInstantiate)
             throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         return createWithConstructor(classToInstantiate, Object.class, new Class[0], new Object[0]);
     }
 
 
-    @SuppressWarnings ( {
-            "unchecked"
-    } )
-    public static <T> T createWithConstructor ( Class<T> classToInstantiate, Class<? super T> constructorClass, Class<?>[] consArgTypes,
-                                                Object[] consArgs ) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    @SuppressWarnings ( {"unchecked"} )
+    public static <T> T createWithConstructor(
+            Class<T> classToInstantiate, Class<? super T> constructorClass, Class<?>[] consArgTypes, Object[] consArgs
+    ) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Constructor<? super T> objCons = constructorClass.getDeclaredConstructor(consArgTypes);
         objCons.setAccessible(true);
         Constructor<?> sc = ReflectionFactory.getReflectionFactory().newConstructorForSerialization(classToInstantiate, objCons);
@@ -164,20 +164,14 @@ public class ReflectUtils {
         BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
         List<PropertyDescriptor> descriptors = Arrays.stream(beanInfo.getPropertyDescriptors()).filter(p -> {
             String name = p.getName();
-            //过滤掉不需要修改的属性
             return !"class".equals(name) && !"id".equals(name);
         }).collect(Collectors.toList());
-
         for (PropertyDescriptor descriptor : descriptors) {
-            //Method setterMethod  = descriptor.getWriteMethod();
             Method readMethod = descriptor.getReadMethod();
-//            System.out.println(descriptor.getName());
             try {
                 Object o = readMethod.invoke(obj);
                 System.out.println(o);
-            } catch (Exception ignored) {
-
-            }
+            } catch (Exception ignored) {}
         }
     }
 
@@ -201,8 +195,4 @@ public class ReflectUtils {
         }
         return types;
     }
-//    public static void setAccessible(AccessibleObject member) {
-//        // quiet runtime warnings from JDK9+
-//        Permit.setAccessible(member);
-//    }
 }

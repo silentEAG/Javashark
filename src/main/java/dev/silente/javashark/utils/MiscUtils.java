@@ -1,15 +1,16 @@
 package dev.silente.javashark.utils;
 
 
+
 import com.sun.org.apache.bcel.internal.Repository;
 import com.sun.org.apache.bcel.internal.classfile.JavaClass;
 import com.sun.org.apache.bcel.internal.classfile.Utility;
 import javassist.ClassPool;
 import javassist.CtClass;
 
+import java.lang.reflect.Method;
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
@@ -26,16 +27,17 @@ public class MiscUtils {
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(d);
     }
+
     public static String randomString(int len){
         Random rnd = ThreadLocalRandom.current();
         StringBuilder ret = new StringBuilder();
         for (int i = 0; i < len; i++) {
-            boolean isChar = (rnd.nextInt(2) % 2 == 0);// 输出字母还是数字
-            if (isChar) { // 字符串
-                int choice = rnd.nextInt(2) % 2 == 0 ? 65 : 97; // 取得大写字母还是小写字母
+            boolean isChar = (rnd.nextInt(2) % 2 == 0);
+            if (isChar) {
+                int choice = rnd.nextInt(2) % 2 == 0 ? 65 : 97;
                 ret.append((char) (choice + rnd.nextInt(26)));
-            } else { // 数字
-                ret.append(Integer.toString(rnd.nextInt(10)));
+            } else {
+                ret.append(rnd.nextInt(10));
             }
         }
         return ret.toString();
@@ -44,6 +46,7 @@ public class MiscUtils {
     public static String base64Encode(byte[] bytes){
         return Base64.getEncoder().encodeToString(bytes);
     }
+
     public static byte[] base64Decode(String str){
         return Base64.getDecoder().decode(str);
     }
@@ -66,11 +69,24 @@ public class MiscUtils {
         return res;
     }
 
-//    public static String dumpBCELClass(Class<?> clazz) throws Exception{
-//        JavaClass javaClass = Repository.lookupClass(Evil.class);
-//        String code = Utility.encode(javaClass.getBytes(),true);
-//        return "$$BCEL$$"+code;
-//    }
+    public static String dumpBCELClass(Class<?> clazz) throws Exception {
+        JavaClass javaClass = Repository.lookupClass(clazz);
+        String code = Utility.encode(javaClass.getBytes(),true);
+        return "$$BCEL$$"+code;
+    }
+
+    public static String dumpBCELClassReflect(Class<?> clazz) throws Exception {
+        Class<?> repositoryClass = Class.forName("com.sun.org.apache.bcel.internal.Repository");
+        Method lookupClassMethod = repositoryClass.getMethod("lookupClass", Class.class);
+        Object javaClass = lookupClassMethod.invoke(null, clazz);
+        Class<?> javaClassClass = Class.forName("com.sun.org.apache.bcel.internal.classfile.JavaClass");
+        Method getBytesMethod = javaClassClass.getMethod("getBytes");
+        byte[] bytes = (byte[]) getBytesMethod.invoke(javaClass);
+        Class<?> utilityClass = Class.forName("com.sun.org.apache.bcel.internal.classfile.Utility");
+        Method encodeMethod = utilityClass.getMethod("encode", byte[].class, boolean.class);
+        String code = (String) encodeMethod.invoke(null, bytes, true);
+        return "$$BCEL$$" + code;
+    }
 
     public static String bytes2HexString(byte[] bytes) {
         StringBuffer ret = new StringBuffer();
